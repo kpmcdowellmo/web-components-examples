@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Button Example</title>
+    <style>
+        #button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <template id="button-template">
+        <style>
+            .my-button {
+                background-color: green;
+                border: 0;
+                border-radius: 1rem;
+                padding: 1rem;
+                max-width: 100px;
+                text-align: center;
+            }
+
+            .my-button:focus {
+                cursor: pointer;
+            }
+        </style>
+        <button class="my-button">Click Me</button>
+    </template>
+
+    <div id="button-container"></div>
+    <script>
+        const container = document.getElementById("button-container")
+        const template = document.getElementById("button-template")
+        for (let i = 0; i < 5; ++i) {
+            const content = template.content.cloneNode(true)
+            content.id = "button-template-" + i
+            content.children[1].addEventListener("click", () => alert("You clicked button: " + (i + 1)))
+            container.appendChild(content)
+        }
+    </script>
+</body>
+
+</html>

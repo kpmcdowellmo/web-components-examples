@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="./MyButton.js"></script>
+    <style>
+        .btn-container,
+        .props-and-attributes {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .btn-container {
+            gap: 2rem;
+        }
+
+        .input-wrapper {
+            width: 40%;
+        }
+
+        #slot-button::part(button) {
+            background-color: red;
+        }
+
+        #bool-button {
+            --button-default-color: green;
+        }
+
+        :root {
+            --button-default-color: blue;
+            --button-secondary-color: gray;
+        }
+
+        .my-button {
+            max-width: 200px;
+            border: 0;
+            border-radius: 1rem;
+            padding: 1rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .my-button--secondary {
+            background-color: var(--button-secondary-color);
+            color: white;
+        }
+
+        .my-button--primary {
+            background-color: var(--button-default-color);
+            color: white;
+        }
+
+        .my-button.my-button--block {
+            max-width: 100%;
+            width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btn-container">
+        <h1>Autonomous Custom Element Examples</h1>
+        <div class="basic-example example">
+            <h2>Basic Examples</h2>
+            <button is="my-button" id="regular-button" btntext="Example Button"></button>
+            <button is="my-button" id="secondary-button" btntype="secondary" btntext="Secondary Button"></button>
+            <button is="my-button" id="block-button" btntype="primary" btntext="Block Button" block></button>
+        </div>
+
+        <div class="props-and-attributes example">
+            <h2>Change Attributes and Props</h2>
+            <button is="my-button" id="attr-button" btntext="Attributes Button"></button>
+            <button is="my-button" id="props-button" btntype="secondary" btntext="Properties Button"></button>
+            <button is="my-button" id="bool-button" block btntext="Boolean Props"></button>
+            <div class="input-wrapper">
+                <label for="attr-input">Change attribute button text</label>
+                <input id="attr-input" />
+                <button id="attr-change-trigger">Change</button>
+            </div>
+            <div class="input-wrapper">
+                <label for="properties-input">Change properties button text</label>
+                <input id="properties-input" name="properties-input" />
+                <button id="properties-change-trigger">Change</button>
+            </div>
+            <div class="input-wrapper">
+                <label for="bool-checkbox">Toggle Block Button</label>
+                <input id="bool-checkbox" type="checkbox" checked name="bool-checkbox" />
+            </div>
+        </div>
+    </div>
+    <script>
+        const regularButton = document.getElementById("regular-button");
+        const secondaryButton = document.getElementById("secondary-button");
+        const blockButton = document.getElementById("block-button");
+
+        for (const button of [regularButton, secondaryButton, blockButton]) {
+            button.addEventListener("click", evt => {
+                console.log("You clicked button with text: " + evt.currentTarget.btntext)
+            })
+        }
+
+        const attrInput = document.getElementById("attr-input");
+        const attrChangeButton = document.getElementById("attr-change-trigger");
+        const attrButton = document.getElementById("attr-button");
+
+        const propertiesInput = document.getElementById("properties-input");
+        const propertiesChangeButton = document.getElementById("properties-change-trigger");
+        const propertiesButton = document.getElementById("props-button");
+
+        const boolButton = document.getElementById("bool-button");
+        const boolCheckbox = document.getElementById("bool-checkbox");
+
+        attrChangeButton.addEventListener("click", () => {
+            attrButton.setAttribute("btntext", attrInput.value);
+        });
+
+        propertiesChangeButton.addEventListener("click", () => {
+            propertiesButton.btntext = propertiesInput.value;
+        });
+
+        if (!boolCheckbox.checked) {
+            boolButton.removeAttribute("block");
+        }
+
+        boolCheckbox.addEventListener("change", evt => {
+            if (evt.currentTarget.checked) {
+                boolButton.setAttribute("block", true);
+            } else {
+                boolButton.removeAttribute("block");
+            }
+        });
+    </script>
+</body>
+
+</html>
