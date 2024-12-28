@@ -1,0 +1,14 @@
+{
+  "name": "web-components-introduction",
+  "version": "0.0.1",
+  "description": "web components introduction",
+  "main": "index.html",
+  "scripts": {
+    "start": "vite"
+  },
+  "author": "Keven McDowell",
+  "license": "ISC",
+  "dependencies": {
+    "vite": "^6.0.6"
+  }
+}
