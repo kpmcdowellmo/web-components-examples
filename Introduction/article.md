@@ -1,4 +1,3 @@
-
 In modern web development, frameworks are all the rage. Almost all modern frameworks have the concept of components.  The idea behind components is breaking your frontend logic down into smaller reusable chunks that you can share across pages or projects.  Generally these components are not reusable across other frameworks, and will require a build process for compiling them down to JavaScript that can run in the browser.  
 
 What if I told you there was a way to build components using vanilla JavaScript and widely available browser APIs that you could share across frameworks?  This is now a reality with Web Components. Here we will take a quick look at the different types of Web Components, and some of the power we can wield with them.
@@ -102,20 +101,20 @@ class MyComponent extends HTMLElement {
 }
 ```
 
-Any Styles you define within the Shadow DOM are scoped within the Shadow DOM an do not pollute the rest of the document.  Any styles defined in the "Light DOM" (the rest of the document) do not penetrate the Shadow DOM (CSS variables are an exception, but we won't get into that here).  Modern browsers do provide ways to target the Shadow DOM directly from the Light DOM using CSS using parts.  You can add parts to the Shadow DOM of your component by adding [part](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/part) attributes to your markup.  Those parts can then be targetted in CSS using the [::part](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) pseudo selector.  This is extremely handy, but it is pretty limited by nature.  You cannot chain child selectors off the ```::part``` selector. You can only target the specific element that has a "part" attribute within the Shadow DOM.
+Any Styles you define within the Shadow DOM are scoped within the Shadow DOM an do not pollute the rest of the document.  Any styles defined in the "Light DOM" (the rest of the document) do not penetrate the Shadow DOM (CSS variables are an exception, but we won't get into that here).  Modern browsers do provide ways to target the Shadow DOM directly from the Light DOM using CSS using parts.  You can add parts to the Shadow DOM of your component by adding [part](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/part) attributes to your markup.  Those parts can then be targeted in CSS using the [::part](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) pseudo selector.  This is extremely handy, but it is pretty limited by nature.  You cannot chain child selectors off the ::part selector. You can only target the specific element that has a "part" attribute within the Shadow DOM.
 
 Accessibility is also an important consideration when working with the Shadow DOM. If you've ever worked with ARIA attributes, then you are familiar with "aria-describedby" and "aria-labelledby", which are generally given an ID that references another element containing a label or description of the content for screen readers.  The Shadow DOM keeps IDs scoped separately similar to styles, so you cannot reference an ID that lives within the Shadow DOM from the Light DOM and vise versa.  This can present a challenge when trying to provide detailed descriptions that you need to provide dynamically, but workarounds exist that we won't dive into in this introduction.
 
 ### Templates and Slots
 Templates and slots are tools that can be used in combination with the Shadow DOM to enhance web components. Templates are used for creating reusable snippets within Web Components, while slots are used for exposing "holes" that content from the Light DOM can be passed into.  
 
-Templates are handy if there is a snippet of HTML that you need to render over and over again within a Web Component. They can also be used outside Web Components, but have more limited use cases. They are implemented using the ```<template>``` tag.
+Templates are handy if there is a snippet of HTML that you need to render over and over again within a Web Component. They can also be used outside Web Components, but have more limited use cases. They are implemented using the "template" tag.
 
-Slots are used for passing content from the Light DOM into a Web Component, and are implemented using the ```<slot>``` tag. This is handy if you have a generic compnoent that may require dynamic content to get passed in. A good example may be a generic card component, where you could have a slot exposed to pass markup into the body of the card.  Slots have a "name" attribute that you can provide for uniquely identifying the slot. This is handy if you need to put multiple slots into a web component. When passing content in, you can simply pass an attribute with a value of ```slot="your-slot-name"``` and the content will get passed to the slot with the matching name.
+Slots are used for passing content from the Light DOM into a Web Component, and are implemented using the "slot" tag. This is handy if you have a generic component that may require dynamic content to get passed in. A good example may be a generic card component, where you could have a slot exposed to pass markup into the body of the card.  Slots have a "name" attribute that you can provide for uniquely identifying the slot. This is handy if you need to put multiple slots into a web component. When passing content in, you can simply pass an attribute with a value of slot="your-slot-name" and the content will get passed to the slot with the matching name.
 
 Slots and the Shadow DOM have a unique interaction that is worth noting.  Slots can have default content that renders in the event that nothing is passed in. Content passed into slots lives within the Light DOM and is "shallow copied" into the Shadow DOM.  You can see this visually in the browser inspector. The slot content will render within the web component, but in the DOM, the content technically lives outside the web component and provides a link to the slot.
 
-![Slots example](./images/slots-example.png)
+![Slots example](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/4gxtdqims1d2i1ww8qgb.png)
 
 This being said, that means all slot content is styled and referenced just like any other content within the Light DOM. Styles within the Light DOM will impact slot content, while Shadow DOM styles will not.  There are APIs available for interacting with slot content from within the web component.
 
@@ -382,3 +381,5 @@ If you're interested, feel free to view the examples in GitHub, or you can play 
 - [Autonomous Custom Element Example](https://codepen.io/kpmcdowellmo/pen/zxOdWvZ)
 - [Custom Built-In Element Example](https://codepen.io/kpmcdowellmo/pen/dPbzmYm)
 - [Bonus Basic Templates Example!](https://codepen.io/kpmcdowellmo/pen/WbeEzre)
+
+In the next article, we will take a look at how we can expand on using templates and slots, and how we can make rendering easier.  Stay tuned!
